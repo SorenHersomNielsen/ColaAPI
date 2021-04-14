@@ -1,5 +1,6 @@
 ﻿using ColaAPI.Manager;
 using ColaAPI.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace ColaAPI.Controllers
 
         // GET: api/<ColaController>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<Cola> Get()
         {
             return manager.GetAll();
@@ -26,13 +28,34 @@ namespace ColaAPI.Controllers
 
         // GET api/<ColaController>/5
         [HttpGet("{id}")]
-        public Cola Get(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public Cola GetById(int id)
         {
             return manager.GetByID(id);
         }
 
+        // GET api/<ColaController>/brand/eks.
+        [HttpGet("brand/{brand}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public Cola GetByBrand(string brand)
+        {
+            return manager.GetByBrand(brand);
+        }
+        
+        [HttpGet("Producent/{Producent}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public Cola GetByProducent(string Producent)
+        {
+            return manager.GetByProducent(Producent);
+        }
+
         // POST api/<ColaController>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public Cola Post([FromBody] Cola value)
         {
             return manager.Add(value);
@@ -40,6 +63,9 @@ namespace ColaAPI.Controllers
 
         // PUT api/<ColaController>/5
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Cola Put(int id, [FromBody] Cola value)
         {
             return manager.Update(id, value);
@@ -47,6 +73,8 @@ namespace ColaAPI.Controllers
 
         // DELETE api/<ColaController>/5
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Cola Delete(int id)
         {
             return manager.Delete(id);

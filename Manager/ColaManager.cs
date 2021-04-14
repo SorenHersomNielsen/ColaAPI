@@ -27,6 +27,16 @@ namespace ColaAPI.Manager
             return ColaList.Find(ColaList => ColaList.Id == id);
         }
 
+        public Cola GetByBrand(string brand)
+        {
+            return ColaList.Find(ColaList => ColaList.Brand == brand);
+        }
+
+        public Cola GetByProducent(string Producent)
+        {
+            return ColaList.Find(ColaList => ColaList.Producent == Producent);
+        }
+
         public Cola Add(Cola NewCola)
         {
             NewCola.Id = NextId++;
